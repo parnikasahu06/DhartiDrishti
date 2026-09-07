@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polygon, Tooltip, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { Radio, Info, Layers } from 'lucide-react';
+import { Radio } from 'lucide-react';
 import { CHHATTISGARH_CENTER } from '../data/mockData';
 
 // Fix Leaflet default marker icon broken assets
@@ -37,8 +37,8 @@ function createCustomMarkerIcon(zone, isSelected) {
   const isVerified = zone.status === 'VERIFIED';
   
   const iconHtml = `
-    <div class="relative flex items-center justify-center cursor-pointer" style="transform: translate(-50%, -50%); z-index: ${isSelected ? 9999 : 100};">
-      <!-- Dominant Radar Pulse Ring for selected marker -->
+    <div class="relative flex items-center justify-center cursor-pointer" style="transform: translate(-50%, -50%);">
+      <!-- Radar Pulse Ring for selected marker -->
       ${isSelected ? `
         <div class="absolute w-16 h-16 rounded-full opacity-75 animate-ping" style="background-color: ${color}; opacity: 0.35;"></div>
         <div class="absolute w-20 h-20 rounded-full border-2 border-dashed animate-spin" style="border-color: ${color}; opacity: 0.6; animation-duration: 6s;"></div>
@@ -91,17 +91,11 @@ const RAIGARH_MINING_POLYGON = [
 export default function MonitoringMap({ zones, activeZone, onSelectZone }) {
   return (
     <div className="relative w-full h-full rounded-2xl overflow-hidden glass-panel border border-white/10 flex flex-col">
-      {/* Top Map Control Bar */}
-      <div className="absolute top-3 left-3 right-3 z-[1000] flex items-center justify-between pointer-events-none">
+      {/* Top Map Region Indicator (Clean z-[400] to sit below modal overlay) */}
+      <div className="absolute top-3 left-3 z-[400] pointer-events-none">
         <div className="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-950/90 border border-white/10 text-xs font-mono-tech text-slate-200 shadow-xl backdrop-blur-md">
           <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
           <span>REGION: <strong className="text-white">CHHATTISGARH MINING BELT</strong></span>
-        </div>
-
-        {/* Real Location / Illustrative Values Pill */}
-        <div className="pointer-events-auto flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-950/90 border border-amber-500/30 text-[11px] font-mono-tech text-amber-300 shadow-xl backdrop-blur-md">
-          <Info className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-          <span>LOCATION: REAL · DEFORMATION VALUES: ILLUSTRATIVE</span>
         </div>
       </div>
 
@@ -194,8 +188,8 @@ export default function MonitoringMap({ zones, activeZone, onSelectZone }) {
         </MapContainer>
       </div>
 
-      {/* Requirement 5: Updated Demo Risk Bands Legend */}
-      <div className="absolute bottom-3 left-3 right-3 z-[1000] flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-slate-950/95 border border-white/10 backdrop-blur-md text-xs font-mono-tech text-slate-300 shadow-2xl">
+      {/* Demo Risk Bands Legend (z-[400] to avoid bleed-through under modals) */}
+      <div className="absolute bottom-3 left-3 right-3 z-[400] flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-slate-950/95 border border-white/10 backdrop-blur-md text-xs font-mono-tech text-slate-300 shadow-2xl">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-3">
             <span className="text-cyan-400 font-bold text-[11px] uppercase tracking-wider">DEMO RISK BANDS:</span>

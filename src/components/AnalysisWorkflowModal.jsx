@@ -99,8 +99,9 @@ export default function AnalysisWorkflowModal({ isOpen, onClose, zone }) {
   const IconComponent = activeStageData.icon;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl animate-fade-in">
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl animate-fade-in">
       <div className="relative w-full max-w-4xl glass-panel-glow rounded-2xl border border-cyan-500/40 p-6 shadow-[0_0_50px_rgba(6,182,212,0.25)] overflow-hidden flex flex-col gap-6">
+
         
         {/* Radar scan grid overlay */}
         <div className="bg-grid-pattern absolute inset-0 opacity-20 pointer-events-none" />

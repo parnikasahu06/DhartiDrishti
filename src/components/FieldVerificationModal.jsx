@@ -49,8 +49,9 @@ export default function FieldVerificationModal({ isOpen, onClose, zone, onVerify
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
       <div className="relative w-full max-w-2xl glass-panel rounded-2xl border border-emerald-500/30 p-6 shadow-2xl overflow-hidden flex flex-col gap-5">
+
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4">

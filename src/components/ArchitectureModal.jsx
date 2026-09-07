@@ -93,8 +93,9 @@ export default function ArchitectureModal({ isOpen, onClose }) {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl animate-fade-in">
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl animate-fade-in">
       <div className="relative w-full max-w-5xl glass-panel rounded-2xl border border-cyan-500/30 p-6 shadow-2xl overflow-hidden flex flex-col gap-6 max-h-[90vh] overflow-y-auto custom-scrollbar">
+
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4">

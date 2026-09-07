@@ -6,91 +6,89 @@ import {
   Layers, 
   Activity, 
   ShieldAlert, 
-  CheckCircle2, 
-  ArrowRight,
   Database,
-  CloudRain,
-  GitMerge,
   FileCheck,
   UserCheck,
-  Building
+  Building,
+  CloudRain
 } from 'lucide-react';
 
 export default function ArchitectureModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
+  // Requirement 8 exact pipeline steps
   const PIPELINE_NODES = [
     {
       step: '01',
       title: 'Sentinel-1 SAR',
-      subtitle: 'Spaceborne Radar Data',
-      tech: 'C-Band IW SLC Imagery',
+      subtitle: 'Spaceborne C-Band Radar',
+      tech: 'Synthetic Aperture Radar',
       icon: Radar,
       color: 'border-cyan-500/40 bg-cyan-950/40 text-cyan-400',
     },
     {
       step: '02',
       title: 'SBAS-InSAR',
-      subtitle: 'Multi-Temporal Baseline',
-      tech: 'Interferometric Fringes',
+      subtitle: 'Surface Displacement Extraction',
+      tech: 'Small Baseline Interferometry',
       icon: Layers,
       color: 'border-blue-500/40 bg-blue-950/40 text-blue-400',
     },
     {
       step: '03',
       title: 'ISCE2 / MintPy',
-      subtitle: 'Phase Unwrapping Engine',
-      tech: 'SNAPHU + GACOS + SRTM',
+      subtitle: 'Inversion & Processing Engine',
+      tech: 'SNAPHU Unwrapping',
       icon: Database,
       color: 'border-indigo-500/40 bg-indigo-950/40 text-indigo-400',
     },
     {
       step: '04',
+      title: 'Atmospheric + DEM Corrections',
+      subtitle: 'Phase Delay Correction',
+      tech: 'GACOS + SRTM 30m',
+      icon: CloudRain,
+      color: 'border-sky-500/40 bg-sky-950/40 text-sky-400',
+    },
+    {
+      step: '05',
       title: 'Deformation Time Series',
-      subtitle: 'Millimeter Velocity',
-      tech: 'Multi-Temporal Inversion',
+      subtitle: 'Millimeter Velocity Trend',
+      tech: 'Multi-Temporal Baseline',
       icon: Activity,
       color: 'border-purple-500/40 bg-purple-950/40 text-purple-400',
     },
     {
-      step: '05',
-      title: 'Stacked LSTM',
-      subtitle: 'Deep Learning Forecasting',
-      tech: '30-60 Day Neural Horizon',
+      step: '06',
+      title: 'LSTM Forecasting',
+      subtitle: '30-Day Predictive Model',
+      tech: 'Stacked Recurrent Neural Net',
       icon: Cpu,
       color: 'border-amber-500/40 bg-amber-950/40 text-amber-400',
     },
     {
-      step: '06',
+      step: '07',
       title: 'Severity Ranking',
-      subtitle: 'Prioritization Engine',
-      tech: 'Multi-Factor Risk Score',
+      subtitle: 'Risk Score Matrix',
+      tech: 'Velocity + Acceleration Engine',
       icon: ShieldAlert,
       color: 'border-orange-500/40 bg-orange-950/40 text-orange-400',
     },
     {
-      step: '07',
+      step: '08',
       title: 'Explainable Alert',
-      subtitle: 'Audit Evidence Package',
-      tech: 'Velocity + Acceleration Drivers',
+      subtitle: 'Decision Support Package',
+      tech: 'Audit Evidence Drivers',
       icon: FileCheck,
       color: 'border-red-500/40 bg-red-950/40 text-red-400',
     },
     {
-      step: '08',
+      step: '09',
       title: 'Field Verification',
-      subtitle: 'Human-in-the-Loop',
-      tech: 'Ground Extensometer Audit',
+      subtitle: 'Human-in-the-Loop Audit',
+      tech: 'In-Situ Extensometer Check',
       icon: UserCheck,
       color: 'border-emerald-500/40 bg-emerald-950/40 text-emerald-400',
-    },
-    {
-      step: '09',
-      title: 'Authority Action',
-      subtitle: 'Mitigation & Safety',
-      tech: 'Disaster Management Decision',
-      icon: Building,
-      color: 'border-emerald-400/60 bg-emerald-950/60 text-white',
     },
   ];
 
@@ -106,10 +104,10 @@ export default function ArchitectureModal({ isOpen, onClose }) {
             </div>
             <div>
               <div className="text-[10px] font-mono-tech text-cyan-400 font-bold uppercase tracking-widest">
-                SYSTEM ARCHITECTURE & TECHNICAL PIPELINE
+                TECHNICAL ARCHITECTURE
               </div>
               <h2 className="text-xl font-bold font-display-title text-white">
-                DHARTI DRISHTI END-TO-END DEEP-TECH WORKFLOW
+                SYSTEM ARCHITECTURE & PROCESSING PIPELINE
               </h2>
             </div>
           </div>
@@ -122,15 +120,9 @@ export default function ArchitectureModal({ isOpen, onClose }) {
           </button>
         </div>
 
-        {/* Technical Subheading */}
-        <p className="text-xs text-slate-300 -mt-2 leading-relaxed">
-          The core architecture integrates satellite synthetic aperture radar interferometry with deep learning temporal forecasting 
-          and human-in-the-loop decision-support governance.
-        </p>
-
-        {/* Visual Pipeline Flow Grid */}
+        {/* Pipeline Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 relative">
-          {PIPELINE_NODES.map((node, index) => {
+          {PIPELINE_NODES.map((node) => {
             const Icon = node.icon;
             return (
               <div
@@ -161,33 +153,6 @@ export default function ArchitectureModal({ isOpen, onClose }) {
               </div>
             );
           })}
-        </div>
-
-        {/* Key Scientific Software Engine Badges */}
-        <div className="p-4 rounded-xl bg-slate-900/80 border border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs font-mono-tech text-slate-300">
-          <div className="flex items-center gap-2">
-            <span className="text-slate-400 uppercase font-bold text-[11px]">Core Tech Stack:</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <span className="px-2.5 py-1 rounded bg-slate-800 border border-cyan-500/30 text-cyan-300 text-[11px]">
-              Sentinel-1 A/B SAR
-            </span>
-            <span className="px-2.5 py-1 rounded bg-slate-800 border border-blue-500/30 text-blue-300 text-[11px]">
-              SBAS-InSAR
-            </span>
-            <span className="px-2.5 py-1 rounded bg-slate-800 border border-indigo-500/30 text-indigo-300 text-[11px]">
-              ISCE2 + MintPy
-            </span>
-            <span className="px-2.5 py-1 rounded bg-slate-800 border border-purple-500/30 text-purple-300 text-[11px]">
-              GACOS Atmospheric Correction
-            </span>
-            <span className="px-2.5 py-1 rounded bg-slate-800 border border-amber-500/30 text-amber-300 text-[11px]">
-              SNAPHU Phase Unwrapping
-            </span>
-            <span className="px-2.5 py-1 rounded bg-slate-800 border border-emerald-500/30 text-emerald-300 text-[11px]">
-              PyTorch Stacked LSTM
-            </span>
-          </div>
         </div>
 
         {/* Modal Actions */}

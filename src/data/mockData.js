@@ -35,38 +35,39 @@ export const MONITORING_ZONES = [
     riskLevel: 'HIGH', // LOW, MEDIUM, HIGH, CRITICAL
     priorityBadge: 'HIGH PRIORITY',
     status: 'INSPECTION_REQUIRED', // STABLE, MONITORING, INSPECTION_REQUIRED, VERIFIED
+    dataStatus: 'LOCATION: REAL · DEFORMATION VALUES: ILLUSTRATIVE',
     verifiedAt: null,
     verifiedBy: null,
     flaggedReasons: [
-      'Persistent downward deformation rate (-1.25 mm/month continuous)',
-      'Increasing deformation acceleration in last 3 satellite passes',
-      '30-day LSTM forecast predicts breaching -15.0 mm safety limit'
+      'Persistent deformation detected across historical baseline',
+      'Increasing velocity trend in recent acquisitions',
+      'Forecast indicates continued movement breaching threshold'
     ],
-    recommendedAction: 'PRIORITIZE FIELD INSPECTION',
+    recommendedAction: 'Prioritize field inspection',
     fieldChecklist: [
-      { id: 'c1', label: 'Ground Fissure & Crack Survey along Slope Wall', completed: false },
-      { id: 'c2', label: 'Cross-check Existing Crack Meter / Extensometer Sensors', completed: false },
-      { id: 'c3', label: 'Visual Inspection of Nearby Drainage & Retaining Walls', completed: false }
+      { id: 'c1', label: 'Ground Fissure & Structural Crack Survey', completed: false },
+      { id: 'c2', label: 'Existing Crack Meter / Extensometer Cross-Check', completed: false },
+      { id: 'c3', label: 'Site Observation & Slope Wall Inspection', completed: false }
     ],
-    inspectorNotes: 'Minor tension cracks observed along eastern terrace embankment. In-situ extensometer recorded -11.8 mm cumulative displacement.',
+    inspectorNotes: 'Minor tension cracks observed along eastern terrace embankment. Extensometer reading cross-checked at site.',
     evidence: {
       persistentDeformation: {
-        title: 'Persistent Displacement Rate',
+        title: 'Persistent deformation',
         value: '-1.25 mm / month',
         status: 'CRITICAL',
-        desc: 'Continuous linear downward displacement detected across 24 consecutive Sentinel-1 SAR acquisitions without seasonal rebound.'
+        desc: 'Continuous linear downward displacement detected across 24 consecutive Sentinel-1 SAR acquisitions.'
       },
       increasingTrend: {
-        title: 'Acceleration Shift',
+        title: 'Increasing velocity trend',
         value: '+42% Velocity Acceleration',
         status: 'WARNING',
-        desc: 'Displacement rate accelerated from -0.8 mm/mo to -1.25 mm/mo following monsoon saturation.'
+        desc: 'Displacement rate accelerated from -0.8 mm/mo to -1.25 mm/mo post-monsoon.'
       },
       forecastDeterioration: {
-        title: 'LSTM Forecast Projection',
+        title: 'Forecast indicates continued movement',
         value: '-18.7 mm @ 30 Days',
         status: 'CRITICAL',
-        desc: 'Deep learning model projects trajectory will exceed critical -15.0 mm displacement threshold within 30 days.'
+        desc: 'LSTM neural network projects trajectory will exceed critical -15.0 mm safety limit.'
       }
     }
   },
@@ -86,38 +87,39 @@ export const MONITORING_ZONES = [
     riskLevel: 'CRITICAL',
     priorityBadge: 'CRITICAL PRIORITY',
     status: 'INSPECTION_REQUIRED',
+    dataStatus: 'LOCATION: REAL · DEFORMATION VALUES: ILLUSTRATIVE',
     verifiedAt: null,
     verifiedBy: null,
     flaggedReasons: [
-      'Severe slope displacement rate (-2.40 mm/month continuous)',
-      'Non-linear deformation acceleration detected after heavy rainfall',
-      'High proximity (180m) to haulage access road infrastructure'
+      'Persistent deformation detected on pit wall rim',
+      'Increasing velocity trend accelerated after heavy rainfall',
+      'Forecast indicates continued movement towards haulage corridor'
     ],
-    recommendedAction: 'IMMEDIATE FIELD VERIFICATION & RETAINING WALL AUDIT',
+    recommendedAction: 'Prioritize field inspection',
     fieldChecklist: [
-      { id: 'c1', label: 'Inspect Pit Wall Rim Fissures', completed: false },
-      { id: 'c2', label: 'Optical Total Station Distance Verification', completed: false },
-      { id: 'c3', label: 'Restrict Heavy Machinery Haulage Access', completed: false }
+      { id: 'c1', label: 'Pit Wall Rim Fissure Inspection', completed: false },
+      { id: 'c2', label: 'Optical Total Station Extensometer Audit', completed: false },
+      { id: 'c3', label: 'Site Observation & Haulage Access Safety Check', completed: false }
     ],
     inspectorNotes: '',
     evidence: {
       persistentDeformation: {
-        title: 'Severe Cumulative Displacement',
+        title: 'Persistent deformation',
         value: '-2.40 mm / month',
         status: 'CRITICAL',
-        desc: 'Rapid ground subsidence detected along the pit rim overburden face.'
+        desc: 'Rapid ground subsidence detected along overburden terrace wall.'
       },
       increasingTrend: {
-        title: 'Non-linear Acceleration',
-        value: '+85% Rate Spike',
+        title: 'Increasing velocity trend',
+        value: '+85% Velocity Spike',
         status: 'CRITICAL',
-        desc: 'Sharp acceleration trend verified across ascending and descending orbit geometry.'
+        desc: 'Velocity acceleration verified across ascending and descending orbit geometry.'
       },
       forecastDeterioration: {
-        title: 'Threshold Breach Projection',
+        title: 'Forecast indicates continued movement',
         value: '-35.2 mm @ 30 Days',
         status: 'CRITICAL',
-        desc: 'LSTM neural network projects severe slope movement requiring prompt site action.'
+        desc: 'Neural network projects severe slope movement requiring prompt verification.'
       }
     }
   },
@@ -137,35 +139,36 @@ export const MONITORING_ZONES = [
     riskLevel: 'LOW',
     priorityBadge: 'LOW RISK',
     status: 'STABLE',
+    dataStatus: 'LOCATION: REAL · DEFORMATION VALUES: ILLUSTRATIVE',
     verifiedAt: null,
     verifiedBy: null,
     flaggedReasons: [
-      'Minimal background displacement rate within normal seasonal bounds',
-      'No significant trend acceleration observed in past 12 months'
+      'Minimal background displacement within normal limits',
+      'No acceleration observed in time-series'
     ],
-    recommendedAction: 'CONTINUE ROUTINE SATELLITE MONITORING',
+    recommendedAction: 'Continue routine satellite monitoring',
     fieldChecklist: [
-      { id: 'c1', label: 'Routine Quarterly Sensor Audit', completed: true }
+      { id: 'c1', label: 'Routine Sensor Audit', completed: true }
     ],
-    inspectorNotes: 'Ground stable. No distress signs.',
+    inspectorNotes: 'Ground stable.',
     evidence: {
       persistentDeformation: {
-        title: 'Background Settlement',
+        title: 'Persistent deformation',
         value: '-0.15 mm / month',
         status: 'NORMAL',
-        desc: 'Minor baseline settlement within natural elastic soil compaction limits.'
+        desc: 'Minor settlement within natural soil compaction limits.'
       },
       increasingTrend: {
-        title: 'Zero Acceleration',
+        title: 'Increasing velocity trend',
         value: 'Stable Rate',
         status: 'NORMAL',
-        desc: 'Trajectory remains flat over consecutive SAR acquisitions.'
+        desc: 'Trajectory remains flat.'
       },
       forecastDeterioration: {
-        title: 'Low Model Risk Projection',
+        title: 'Forecast indicates continued movement',
         value: '-2.8 mm @ 30 Days',
         status: 'NORMAL',
-        desc: 'Forecast trajectory remains comfortably within safe operational thresholds.'
+        desc: 'Forecast remains well within safe threshold.'
       }
     }
   },
@@ -185,32 +188,31 @@ export const MONITORING_ZONES = [
     riskLevel: 'MEDIUM',
     priorityBadge: 'MODERATE PRIORITY',
     status: 'MONITORING',
+    dataStatus: 'LOCATION: REAL · DEFORMATION VALUES: ILLUSTRATIVE',
     verifiedAt: null,
     verifiedBy: null,
     flaggedReasons: [
-      'Gradual ongoing subsidence (-0.55 mm/month)',
-      'Stable baseline trend but requires continued observation'
+      'Ongoing low-rate subsidence (-0.55 mm/month)',
+      'Baseline trend requires routine tracking'
     ],
-    recommendedAction: 'SCHEDULE ROUTINE BI-WEEKLY SATELLITE SCAN',
-    fieldChecklist: [
-      { id: 'c1', label: 'Bi-monthly Visual Site Inspection', completed: false }
-    ],
+    recommendedAction: 'Schedule routine satellite scan',
+    fieldChecklist: [],
     inspectorNotes: '',
     evidence: {
       persistentDeformation: {
-        title: 'Moderate Subsidence Rate',
+        title: 'Persistent deformation',
         value: '-0.55 mm / month',
         status: 'ELEVATED',
         desc: 'Displacement rate steady near operational monitoring threshold.'
       },
       increasingTrend: {
-        title: 'Linear Trend',
+        title: 'Increasing velocity trend',
         value: 'Constant Velocity',
         status: 'NORMAL',
-        desc: 'No significant velocity spike observed in recent acquisitions.'
+        desc: 'No velocity spike in recent acquisitions.'
       },
       forecastDeterioration: {
-        title: 'Predictive Projection',
+        title: 'Forecast indicates continued movement',
         value: '-9.4 mm @ 30 Days',
         status: 'ELEVATED',
         desc: 'Forecast shows continuous low-rate settlement.'
@@ -233,132 +235,43 @@ export const MONITORING_ZONES = [
     riskLevel: 'HIGH',
     priorityBadge: 'HIGH PRIORITY',
     status: 'INSPECTION_REQUIRED',
+    dataStatus: 'LOCATION: REAL · DEFORMATION VALUES: ILLUSTRATIVE',
     verifiedAt: null,
     verifiedBy: null,
     flaggedReasons: [
-      'Persistent downward deformation rate (-1.45 mm/month)',
-      'Substantial forecast deterioration beyond -20 mm within 30 days'
+      'Persistent deformation detected across Mand coal basin',
+      'Increasing velocity trend in recent passes',
+      'Forecast indicates continued movement breaching threshold'
     ],
-    recommendedAction: 'PRIORITIZE FIELD INSPECTION & STABILITY REPORT',
+    recommendedAction: 'Prioritize field inspection',
     fieldChecklist: [
-      { id: 'c1', label: 'Geotechnical Soil Sampling & Crack Inspection', completed: false }
+      { id: 'c1', label: 'Ground Fissure & Extensometer Audit', completed: false }
     ],
     inspectorNotes: '',
     evidence: {
       persistentDeformation: {
-        title: 'Subsidence Trend',
+        title: 'Persistent deformation',
         value: '-1.45 mm / month',
         status: 'CRITICAL',
-        desc: 'Significant multi-temporal surface displacement detected by SBAS-InSAR.'
+        desc: 'Significant displacement detected by InSAR.'
       },
       increasingTrend: {
-        title: 'Velocity Acceleration',
-        value: '+35% Increase',
+        title: 'Increasing velocity trend',
+        value: '+35% Velocity Acceleration',
         status: 'WARNING',
-        desc: 'Acceleration observed following recent excavation expansion.'
+        desc: 'Velocity acceleration observed.'
       },
       forecastDeterioration: {
-        title: 'LSTM Risk Curve',
+        title: 'Forecast indicates continued movement',
         value: '-21.0 mm @ 30 Days',
         status: 'CRITICAL',
-        desc: 'Deterioration predicted to reach high-priority intervention status.'
-      }
-    }
-  },
-  {
-    id: 'SUR-01',
-    name: 'SURGUJA · PARSA BLOCK 01',
-    district: 'Surguja',
-    locationName: 'Hasdeo Mining Boundary South',
-    lat: 23.1245,
-    lng: 83.1982,
-    currentDeformation: -5.4,
-    trend: 'STABLE',
-    trendRate: -0.45,
-    forecast30Day: -8.1,
-    forecast60Day: -10.8,
-    riskScore: 52,
-    riskLevel: 'MEDIUM',
-    priorityBadge: 'MODERATE PRIORITY',
-    status: 'MONITORING',
-    verifiedAt: null,
-    verifiedBy: null,
-    flaggedReasons: [
-      'Ongoing low-level surface movement (-0.45 mm/month)',
-      'No critical threshold breach predicted in 30 days'
-    ],
-    recommendedAction: 'MAINTAIN REGULAR SATELLITE TIME-SERIES SCANNING',
-    fieldChecklist: [],
-    inspectorNotes: '',
-    evidence: {
-      persistentDeformation: {
-        title: 'Low Subsidence',
-        value: '-0.45 mm / month',
-        status: 'ELEVATED',
-        desc: 'Controlled displacement observed across forest perimeter.'
-      },
-      increasingTrend: {
-        title: 'Steady State',
-        value: 'Uniform',
-        status: 'NORMAL',
-        desc: 'Uniform velocity with minor moisture-induced variance.'
-      },
-      forecastDeterioration: {
-        title: 'LSTM Forecast',
-        value: '-8.1 mm @ 30 Days',
-        status: 'NORMAL',
-        desc: 'Forecast indicates low risk of slope failure.'
-      }
-    }
-  },
-  {
-    id: 'BIL-01',
-    name: 'BILASPUR · BUFFER SECTOR 01',
-    district: 'Bilaspur',
-    locationName: 'Northern Railway Freight Corridor',
-    lat: 22.0835,
-    lng: 82.1550,
-    currentDeformation: -1.8,
-    trend: 'STABLE',
-    trendRate: -0.12,
-    forecast30Day: -2.2,
-    forecast60Day: -2.7,
-    riskScore: 15,
-    riskLevel: 'LOW',
-    priorityBadge: 'LOW RISK',
-    status: 'STABLE',
-    verifiedAt: null,
-    verifiedBy: null,
-    flaggedReasons: [
-      'Background movement well within infrastructure tolerance limits'
-    ],
-    recommendedAction: 'ROUTINE SATELLITE DISPLACEMENT TRACKING',
-    fieldChecklist: [],
-    inspectorNotes: '',
-    evidence: {
-      persistentDeformation: {
-        title: 'Nominal Baseline',
-        value: '-0.12 mm / month',
-        status: 'NORMAL',
-        desc: 'Infrastructure foundation remains highly stable.'
-      },
-      increasingTrend: {
-        title: 'Zero Acceleration',
-        value: 'Static',
-        status: 'NORMAL',
-        desc: 'No significant velocity variance recorded.'
-      },
-      forecastDeterioration: {
-        title: 'Stable Model Output',
-        value: '-2.2 mm @ 30 Days',
-        status: 'NORMAL',
-        desc: 'No threshold breach predicted.'
+        desc: 'Deterioration predicted to reach intervention status.'
       }
     }
   }
 ];
 
-// Generates time-series points for observed (24 acquisitions, past 12 months) and forecast (6 acquisitions, next 60 days)
+// Generates time-series points for observed and forecast
 export function generateTimeSeries(zone) {
   const dates = [];
   const observedData = [];
@@ -367,27 +280,22 @@ export function generateTimeSeries(zone) {
   const confidenceLower = [];
 
   const now = new Date('2026-09-06');
-  const daysPerAcquisition = 12; // Sentinel-1 repeat cycle
-
-  // 24 historical points
-  let currentVal = 0;
-  const ratePerAcquisition = (zone.currentDeformation / 24) * 1.1;
+  const daysPerAcquisition = 12;
 
   for (let i = 24; i >= 0; i--) {
     const d = new Date(now.getTime() - i * daysPerAcquisition * 24 * 60 * 60 * 1000);
     const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: '2-digit' });
     dates.push(dateStr);
 
+    let currentVal = 0;
     if (i === 24) {
       currentVal = 0;
     } else {
-      // Add slight noise to simulate real SBAS phase variance
       const noise = (Math.sin(i * 0.7) * 0.4) - 0.2;
       const step = (zone.currentDeformation / 24) + (noise * 0.3);
-      currentVal += step;
+      currentVal = ((24 - i) / 24) * zone.currentDeformation + (noise * 0.2);
     }
     
-    // Exact match for current date (last observed)
     if (i === 0) {
       currentVal = zone.currentDeformation;
     }
@@ -398,12 +306,10 @@ export function generateTimeSeries(zone) {
     confidenceLower.push(null);
   }
 
-  // Connect forecast starting point to last observed
   forecastData[observedData.length - 1] = zone.currentDeformation;
   confidenceUpper[observedData.length - 1] = zone.currentDeformation;
   confidenceLower[observedData.length - 1] = zone.currentDeformation;
 
-  // 6 forecast points (30-60 day horizon)
   let forecastVal = zone.currentDeformation;
   const forecastStep = (zone.forecast60Day - zone.currentDeformation) / 6;
 
@@ -418,7 +324,6 @@ export function generateTimeSeries(zone) {
     observedData.push(null);
     forecastData.push(fValFixed);
     
-    // Confidence interval widens over time (+/- 1.2mm to 3.5mm)
     const errorMargin = 0.8 + (f * 0.5);
     confidenceUpper.push(Number((fValFixed + errorMargin).toFixed(1)));
     confidenceLower.push(Number((fValFixed - errorMargin).toFixed(1)));

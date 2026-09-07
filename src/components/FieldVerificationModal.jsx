@@ -2,13 +2,8 @@ import React, { useState } from 'react';
 import { 
   CheckSquare, 
   X, 
-  ShieldCheck, 
   ArrowRight, 
   CheckCircle2, 
-  FileText, 
-  AlertTriangle, 
-  UserCheck,
-  Building2,
   Sparkles
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -18,14 +13,14 @@ export default function FieldVerificationModal({ isOpen, onClose, zone, onVerify
 
   const [checklist, setChecklist] = useState(
     zone.fieldChecklist || [
-      { id: 'c1', label: 'Ground Fissure & Crack Survey along Slope Wall', completed: true },
-      { id: 'c2', label: 'Cross-check Existing Crack Meter / Extensometer Sensors', completed: true },
-      { id: 'c3', label: 'Visual Inspection of Nearby Drainage & Retaining Walls', completed: false }
+      { id: 'c1', label: 'Ground Fissure & Structural Crack Survey', completed: true },
+      { id: 'c2', label: 'Existing Crack Meter / Extensometer Cross-Check', completed: true },
+      { id: 'c3', label: 'Site Observation & Slope Wall Inspection', completed: false }
     ]
   );
 
   const [notes, setNotes] = useState(
-    zone.inspectorNotes || 'Field team inspected eastern embankment wall. Tensile hairline cracks observed near haul road boundary. Extensometer readings confirm -11.8mm movement.'
+    zone.inspectorNotes || 'Field team inspected slope wall boundary. Tensile hairline cracks observed near haul road boundary. In-situ extensometer confirms movement.'
   );
 
   const isAlreadyVerified = zone.status === 'VERIFIED';
@@ -41,10 +36,9 @@ export default function FieldVerificationModal({ isOpen, onClose, zone, onVerify
     setIsSubmitted(true);
     onVerifyZone(zone.id, notes);
 
-    // Trigger celebratory confetti effect
     try {
       confetti({
-        particleCount: 80,
+        particleCount: 75,
         spread: 60,
         origin: { y: 0.6 },
         colors: ['#10b981', '#06b6d4', '#3b82f6']
@@ -66,7 +60,7 @@ export default function FieldVerificationModal({ isOpen, onClose, zone, onVerify
             </div>
             <div>
               <div className="text-[10px] font-mono-tech text-emerald-400 font-bold uppercase tracking-wider">
-                HUMAN-IN-THE-LOOP FIELD VERIFICATION
+                FIELD VERIFICATION PROTOCOL
               </div>
               <h2 className="text-xl font-bold font-display-title text-white">
                 SITE: {zone.name}
@@ -82,8 +76,8 @@ export default function FieldVerificationModal({ isOpen, onClose, zone, onVerify
           </button>
         </div>
 
-        {/* Workflow Diagram Banner */}
-        <div className="p-3.5 rounded-xl bg-slate-900/90 border border-white/10 flex items-center justify-between text-[11px] font-mono-tech">
+        {/* Requirement 3: AI ALERT → PRIORITIZED INSPECTION → FIELD VERIFICATION → AUTHORITY DECISION */}
+        <div className="p-3.5 rounded-xl bg-slate-900/90 border border-white/10 flex items-center justify-between text-[11px] font-mono-tech shadow-inner">
           <div className="flex items-center gap-1.5 text-cyan-400 font-bold">
             <span className="w-2 h-2 rounded-full bg-cyan-400" />
             <span>AI ALERT</span>
@@ -94,8 +88,8 @@ export default function FieldVerificationModal({ isOpen, onClose, zone, onVerify
             <span>PRIORITIZED INSPECTION</span>
           </div>
           <ArrowRight className="w-3.5 h-3.5 text-slate-600" />
-          <div className={`flex items-center gap-1.5 font-bold ${isSubmitted ? 'text-emerald-400' : 'text-slate-400'}`}>
-            <span className={`w-2 h-2 rounded-full ${isSubmitted ? 'bg-emerald-400 animate-pulse' : 'bg-slate-600'}`} />
+          <div className={`flex items-center gap-1.5 font-bold ${isSubmitted ? 'text-emerald-400' : 'text-slate-300'}`}>
+            <span className={`w-2 h-2 rounded-full ${isSubmitted ? 'bg-emerald-400 animate-pulse' : 'bg-slate-500'}`} />
             <span>FIELD VERIFICATION</span>
           </div>
           <ArrowRight className="w-3.5 h-3.5 text-slate-600" />
@@ -105,7 +99,7 @@ export default function FieldVerificationModal({ isOpen, onClose, zone, onVerify
           </div>
         </div>
 
-        {/* Site Details & Inspection Checklist */}
+        {/* Checklist & Inspector Notes */}
         <div className="p-4 rounded-xl bg-slate-900/80 border border-white/10 flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold font-mono-tech text-slate-200 uppercase tracking-wider">
@@ -144,10 +138,9 @@ export default function FieldVerificationModal({ isOpen, onClose, zone, onVerify
             ))}
           </div>
 
-          {/* Inspector Field Notes */}
           <div className="flex flex-col gap-1.5 mt-2">
             <label className="text-[11px] font-mono-tech text-slate-400 font-semibold uppercase">
-              Field Inspector Observations & Instrument Notes:
+              Field Inspector Observations & Extensometer Notes:
             </label>
             <textarea
               value={notes}
@@ -155,18 +148,18 @@ export default function FieldVerificationModal({ isOpen, onClose, zone, onVerify
               disabled={isSubmitted}
               rows={3}
               className="w-full p-2.5 rounded-lg bg-slate-950 border border-white/10 text-xs font-mono-tech text-slate-200 focus:outline-none focus:border-emerald-500/50 disabled:opacity-80"
-              placeholder="Enter site observations, extensometer readings, or crack meter measurements..."
+              placeholder="Enter site observations or instrument readings..."
             />
           </div>
         </div>
 
-        {/* CORE PHILOSOPHY CALLOUT BANNER */}
-        <div className="p-3 rounded-xl bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-900 border border-emerald-500/30 text-center flex flex-col items-center justify-center gap-1 shadow-lg">
+        {/* Requirement 3: FINAL GOVERNANCE MESSAGE */}
+        <div className="p-3 rounded-xl bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-900 border border-emerald-500/40 text-center flex flex-col items-center justify-center gap-1 shadow-lg">
           <div className="text-[10px] font-mono-tech text-emerald-400 uppercase tracking-widest font-semibold flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-emerald-400" />
-            CORE GOVERNANCE DESIGN
+            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+            CORE GOVERNANCE PRINCIPLE
           </div>
-          <div className="text-sm font-extrabold font-mono-tech text-white tracking-wider">
+          <div className="text-sm font-extrabold font-mono-tech text-white tracking-widest">
             AI RECOMMENDS &nbsp;·&nbsp; HUMANS VERIFY &nbsp;·&nbsp; AUTHORITIES DECIDE
           </div>
         </div>
@@ -192,13 +185,13 @@ export default function FieldVerificationModal({ isOpen, onClose, zone, onVerify
             <div className="flex items-center gap-2">
               <span className="text-xs text-emerald-400 font-mono-tech font-bold flex items-center gap-1">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                VERIFICATION RECORDED IN SYSTEM
+                FIELD VERIFICATION RECORDED
               </span>
               <button
                 onClick={onClose}
                 className="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs font-mono-tech uppercase transition-all shadow-md cursor-pointer ml-3"
               >
-                Return to Command Center
+                Return to Dashboard
               </button>
             </div>
           )}

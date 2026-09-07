@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Play, 
   HelpCircle, 
   CheckSquare, 
   AlertTriangle, 
   TrendingDown, 
-  TrendingUp, 
   Activity, 
   ShieldAlert, 
-  ArrowRight,
   CheckCircle2,
-  Clock,
-  Sparkles
+  Sparkles,
+  Info,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import DeformationChart from './DeformationChart';
+import { SATELLITE_METADATA } from '../data/mockData';
 
 export default function AnalysisPanel({ 
   zone, 
@@ -21,6 +22,8 @@ export default function AnalysisPanel({
   onOpenExplainability, 
   onStartVerification 
 }) {
+  const [showTechDetails, setShowTechDetails] = useState(false);
+
   if (!zone) {
     return (
       <div className="w-full h-full glass-panel rounded-2xl p-6 flex flex-col items-center justify-center text-center">
@@ -48,8 +51,19 @@ export default function AnalysisPanel({
 
   return (
     <div className="w-full h-full glass-panel rounded-2xl p-5 border border-white/10 flex flex-col gap-4 overflow-y-auto custom-scrollbar">
+      
+      {/* Requirement 1: HERO PRIMARY CTA AT TOP */}
+      <button
+        onClick={onRunAnalysis}
+        className="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-cyan-600 via-blue-600 to-cyan-500 hover:from-cyan-500 hover:to-blue-400 text-white font-bold text-sm uppercase tracking-wider flex items-center justify-center gap-3 transition-all shadow-[0_0_25px_rgba(6,182,212,0.35)] hover:shadow-[0_0_35px_rgba(6,182,212,0.6)] cursor-pointer group border border-cyan-300/40 shrink-0"
+      >
+        <Play className="w-5 h-5 fill-white group-hover:scale-125 transition-transform" />
+        <span className="font-mono-tech tracking-widest text-sm">▶ RUN SATELLITE ANALYSIS</span>
+        <Sparkles className="w-4 h-4 text-cyan-200 animate-pulse ml-auto" />
+      </button>
+
       {/* Zone Header Info */}
-      <div className="flex items-start justify-between gap-3 border-b border-white/10 pb-3.5">
+      <div className="flex items-start justify-between gap-3 border-b border-white/10 pb-3">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-slate-800 border border-white/10 text-cyan-400 font-bold uppercase tracking-widest">
@@ -61,16 +75,18 @@ export default function AnalysisPanel({
             {isVerified && (
               <span className="flex items-center gap-1 text-[10px] font-mono-tech px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-bold">
                 <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                FIELD VERIFIED
+                VERIFIED
               </span>
             )}
           </div>
           <h2 className="text-lg font-bold font-display-title text-white tracking-tight">
             {zone.name}
           </h2>
-          <p className="text-xs text-slate-400 mt-0.5">
-            {zone.locationName} · {zone.lat.toFixed(4)}°N, {zone.lng.toFixed(4)}°E
-          </p>
+          {/* Requirement 4: Explicit Illustrative Data Pill */}
+          <div className="text-[10px] font-mono-tech text-amber-400 mt-1 flex items-center gap-1">
+            <Info className="w-3 h-3 text-amber-400 shrink-0" />
+            <span>LOCATION: REAL · DEFORMATION VALUES: ILLUSTRATIVE</span>
+          </div>
         </div>
 
         {/* Priority Badge */}
@@ -80,41 +96,34 @@ export default function AnalysisPanel({
         </div>
       </div>
 
-      {/* Key Metrics Grid */}
+      {/* Requirement 7: Clear Hierarchy: GROUND DEFORMATION → TREND → FORECAST */}
       <div className="grid grid-cols-3 gap-3">
-        {/* Metric 1: Observed Displacement */}
-        <div className="p-3 rounded-xl bg-slate-900/80 border border-white/10 flex flex-col justify-between">
-          <div className="text-[11px] font-mono-tech text-slate-400 font-medium">Ground Deformation</div>
+        {/* Metric 1: Ground Deformation */}
+        <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 flex flex-col justify-between">
+          <div className="text-[10px] font-mono-tech text-slate-400 font-bold uppercase tracking-wider">01. Ground Deformation</div>
           <div className="text-2xl font-bold font-mono-tech text-cyan-400 my-1">
             {zone.currentDeformation} <span className="text-xs font-normal text-slate-400">mm</span>
           </div>
-          <div className="text-[10px] text-slate-400 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
-            Observed SAR Time-Series
-          </div>
+          <div className="text-[10px] text-slate-400">Observed SAR</div>
         </div>
 
         {/* Metric 2: Trend */}
-        <div className="p-3 rounded-xl bg-slate-900/80 border border-white/10 flex flex-col justify-between">
-          <div className="text-[11px] font-mono-tech text-slate-400 font-medium">Velocity Trend</div>
-          <div className="text-sm font-bold font-mono-tech text-amber-400 my-1 flex items-center gap-1.5 uppercase">
-            <TrendingDown className="w-4 h-4 text-amber-400 shrink-0" />
+        <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 flex flex-col justify-between">
+          <div className="text-[10px] font-mono-tech text-slate-400 font-bold uppercase tracking-wider">02. Trend</div>
+          <div className="text-xs font-bold font-mono-tech text-amber-400 my-1 flex items-center gap-1 uppercase">
+            <TrendingDown className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <span>{zone.trend}</span>
           </div>
-          <div className="text-[10px] text-slate-400">
-            {zone.trendRate} mm / month
-          </div>
+          <div className="text-[10px] text-slate-400">{zone.trendRate} mm/mo</div>
         </div>
 
-        {/* Metric 3: 30-Day Forecast */}
-        <div className="p-3 rounded-xl bg-slate-900/80 border border-white/10 flex flex-col justify-between">
-          <div className="text-[11px] font-mono-tech text-slate-400 font-medium">30-Day LSTM Forecast</div>
+        {/* Metric 3: Forecast */}
+        <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 flex flex-col justify-between">
+          <div className="text-[10px] font-mono-tech text-slate-400 font-bold uppercase tracking-wider">03. 30D Forecast</div>
           <div className="text-2xl font-bold font-mono-tech text-orange-400 my-1">
             {zone.forecast30Day} <span className="text-xs font-normal text-slate-400">mm</span>
           </div>
-          <div className="text-[10px] text-slate-400">
-            Target Horizon: Oct 2026
-          </div>
+          <div className="text-[10px] text-slate-400">LSTM Model</div>
         </div>
       </div>
 
@@ -124,7 +133,7 @@ export default function AnalysisPanel({
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-cyan-400" />
             <span className="text-xs font-bold font-mono-tech text-slate-200 uppercase tracking-wider">
-              Surface Displacement Time-Series & LSTM Projection
+              Displacement Time-Series & 30-Day Forecast
             </span>
           </div>
           <div className="flex items-center gap-3 text-[10px] font-mono-tech">
@@ -139,25 +148,25 @@ export default function AnalysisPanel({
         <DeformationChart zone={zone} />
       </div>
 
-      {/* Risk Engine & Recommendation Card */}
-      <div className="p-4 rounded-xl bg-gradient-to-br from-slate-900/90 to-slate-950/90 border border-white/10 flex flex-col gap-3">
-        <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
+      {/* Risk Engine & Action Section */}
+      <div className="p-4 rounded-xl bg-gradient-to-br from-slate-900/95 to-slate-950/95 border border-white/10 flex flex-col gap-3">
+        <div className="flex items-center justify-between border-b border-white/10 pb-2">
           <div className="flex items-center gap-2">
             <ShieldAlert className={`w-4 h-4 ${zone.riskLevel === 'CRITICAL' ? 'text-red-400' : 'text-orange-400'}`} />
             <span className="text-xs font-bold font-mono-tech text-white uppercase tracking-wider">
-              Risk Engine Severity Ranking
+              Risk Score Engine
             </span>
           </div>
-          <div className="flex items-baseline gap-1">
+          <div className="flex items-baseline gap-1 font-mono-tech">
             <span className="text-slate-400 text-xs">Score:</span>
-            <span className={`text-lg font-bold font-mono-tech ${zone.riskLevel === 'CRITICAL' ? 'text-red-400' : zone.riskLevel === 'HIGH' ? 'text-orange-400' : 'text-amber-400'}`}>
+            <span className={`text-lg font-bold ${zone.riskLevel === 'CRITICAL' ? 'text-red-400' : 'text-orange-400'}`}>
               {zone.riskScore}
             </span>
-            <span className="text-slate-500 text-xs font-mono-tech">/ 100</span>
+            <span className="text-slate-500 text-xs">/ 100</span>
           </div>
         </div>
 
-        {/* Risk Score Progress Bar */}
+        {/* Risk Score Meter */}
         <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
           <div 
             className={`h-full rounded-full transition-all duration-1000 ${riskScoreBar[zone.riskLevel]}`}
@@ -165,10 +174,10 @@ export default function AnalysisPanel({
           />
         </div>
 
-        {/* Flagged Reasons */}
-        <div className="flex flex-col gap-1.5 text-xs text-slate-300">
-          <div className="text-[11px] font-mono-tech text-slate-400 font-semibold uppercase tracking-wider mb-0.5">
-            Key Risk Drivers:
+        {/* Requirement 2: WHY WAS THIS ZONE FLAGGED? */}
+        <div className="flex flex-col gap-1 text-xs text-slate-300">
+          <div className="text-[11px] font-mono-tech text-cyan-300 font-bold uppercase tracking-wider mb-1">
+            WHY WAS THIS ZONE FLAGGED?
           </div>
           {zone.flaggedReasons.map((reason, idx) => (
             <div key={idx} className="flex items-start gap-2 text-slate-300 text-xs">
@@ -178,63 +187,70 @@ export default function AnalysisPanel({
           ))}
         </div>
 
-        {/* Recommended Action Box */}
+        {/* AI Recommendation Box */}
         <div className="mt-1 p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs text-amber-200">
           <div className="flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
             <div>
-              <span className="text-[10px] text-amber-400 font-mono-tech uppercase font-bold block">Recommended Action</span>
+              <span className="text-[10px] text-amber-400 font-mono-tech uppercase font-bold block">AI RECOMMENDATION</span>
               <strong className="text-white text-xs">{zone.recommendedAction}</strong>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Primary Action CTAs */}
-      <div className="flex flex-col gap-2.5 mt-1">
-        {/* CTA 1: RUN SATELLITE ANALYSIS */}
+      {/* Action Buttons Row */}
+      <div className="grid grid-cols-2 gap-2.5">
         <button
-          onClick={onRunAnalysis}
-          className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] cursor-pointer group border border-cyan-400/40"
+          onClick={onOpenExplainability}
+          className="py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-white/10 hover:border-cyan-500/40 text-slate-200 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
         >
-          <Play className="w-4 h-4 fill-white group-hover:scale-110 transition-transform" />
-          <span>RUN SATELLITE ANALYSIS</span>
-          <Sparkles className="w-3.5 h-3.5 text-cyan-200 animate-pulse ml-auto" />
+          <HelpCircle className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+          <span>Why Flagged?</span>
         </button>
 
-        {/* Secondary Action Row */}
-        <div className="grid grid-cols-2 gap-2.5">
-          {/* CTA 2: WHY WAS THIS ZONE FLAGGED? */}
-          <button
-            onClick={onOpenExplainability}
-            className="py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-white/10 hover:border-cyan-500/40 text-slate-200 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
-          >
-            <HelpCircle className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <span>Why Flagged?</span>
-          </button>
+        <button
+          onClick={onStartVerification}
+          className={`py-2.5 px-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+            isVerified
+              ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-300 hover:bg-emerald-900/60'
+              : 'bg-amber-950/60 hover:bg-amber-900/60 border-amber-500/40 text-amber-300'
+          }`}
+        >
+          {isVerified ? (
+            <>
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span>Verified</span>
+            </>
+          ) : (
+            <>
+              <CheckSquare className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span>Start Field Verification</span>
+            </>
+          )}
+        </button>
+      </div>
 
-          {/* CTA 3: START FIELD VERIFICATION */}
-          <button
-            onClick={onStartVerification}
-            className={`py-2.5 px-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-              isVerified
-                ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-300 hover:bg-emerald-900/60'
-                : 'bg-amber-950/60 hover:bg-amber-900/60 border-amber-500/40 text-amber-300'
-            }`}
-          >
-            {isVerified ? (
-              <>
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Field Verified</span>
-              </>
-            ) : (
-              <>
-                <CheckSquare className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <span>Field Verify</span>
-              </>
-            )}
-          </button>
-        </div>
+      {/* Requirement 7: Expandable Technical Metadata Drawer */}
+      <div className="border-t border-white/10 pt-2">
+        <button
+          onClick={() => setShowTechDetails(!showTechDetails)}
+          className="w-full flex items-center justify-between text-[11px] font-mono-tech text-slate-400 hover:text-slate-200 transition-colors py-1 cursor-pointer"
+        >
+          <span>TECHNICAL METADATA & SPECS</span>
+          {showTechDetails ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+        </button>
+
+        {showTechDetails && (
+          <div className="grid grid-cols-2 gap-2 mt-2 p-3 rounded-lg bg-slate-950 border border-white/10 text-[10px] font-mono-tech text-slate-400">
+            <div>Sensor: <span className="text-slate-200">{SATELLITE_METADATA.constellation}</span></div>
+            <div>Mode: <span className="text-slate-200">{SATELLITE_METADATA.sensorMode}</span></div>
+            <div>Polarization: <span className="text-slate-200">{SATELLITE_METADATA.polarization}</span></div>
+            <div>Atmospheric: <span className="text-slate-200">GACOS Delay</span></div>
+            <div>DEM: <span className="text-slate-200">{SATELLITE_METADATA.demReference}</span></div>
+            <div>Forecast: <span className="text-slate-200">Stacked LSTM</span></div>
+          </div>
+        )}
       </div>
     </div>
   );

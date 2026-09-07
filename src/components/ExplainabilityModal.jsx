@@ -5,11 +5,8 @@ import {
   TrendingDown, 
   AlertTriangle, 
   Activity, 
-  CheckCircle2, 
-  ShieldCheck,
   ArrowRight,
-  Info,
-  Layers
+  Info
 } from 'lucide-react';
 import DeformationChart from './DeformationChart';
 
@@ -46,97 +43,101 @@ export default function ExplainabilityModal({ isOpen, onClose, zone, onStartVeri
           </button>
         </div>
 
-        {/* 3 Evidence Cards */}
+        {/* Requirement 2: 3 Simple Evidence Items */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
-          {/* Evidence 1: Persistent deformation */}
+          {/* Bullet 1: Persistent deformation */}
           <div className="p-3.5 rounded-xl bg-slate-900/90 border border-white/10 flex flex-col justify-between gap-2">
             <div>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[10px] font-mono-tech text-slate-400 font-bold uppercase">Evidence 01</span>
                 <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-red-500/20 text-red-400 font-bold">
-                  {evidence?.persistentDeformation?.status || 'CRITICAL'}
+                  CRITICAL
                 </span>
               </div>
               <h4 className="text-xs font-bold text-white font-mono-tech">
-                {evidence?.persistentDeformation?.title || 'Persistent Deformation'}
+                Persistent deformation
               </h4>
               <p className="text-[11px] text-slate-300 mt-1 leading-snug">
-                {evidence?.persistentDeformation?.desc || 'Continuous linear downward deformation detected over 12 months.'}
+                Continuous linear downward displacement detected across historical SAR baseline.
               </p>
             </div>
             <div className="text-sm font-bold font-mono-tech text-cyan-400 pt-2 border-t border-white/5">
-              {evidence?.persistentDeformation?.value}
+              {evidence?.persistentDeformation?.value || '-1.25 mm / month'}
             </div>
           </div>
 
-          {/* Evidence 2: Increasing trend */}
+          {/* Bullet 2: Increasing velocity trend */}
           <div className="p-3.5 rounded-xl bg-slate-900/90 border border-white/10 flex flex-col justify-between gap-2">
             <div>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[10px] font-mono-tech text-slate-400 font-bold uppercase">Evidence 02</span>
                 <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">
-                  {evidence?.increasingTrend?.status || 'WARNING'}
+                  WARNING
                 </span>
               </div>
               <h4 className="text-xs font-bold text-white font-mono-tech">
-                {evidence?.increasingTrend?.title || 'Increasing Acceleration Trend'}
+                Increasing velocity trend
               </h4>
               <p className="text-[11px] text-slate-300 mt-1 leading-snug">
-                {evidence?.increasingTrend?.desc || 'Substantial rate acceleration observed in recent acquisitions.'}
+                Significant velocity acceleration detected in recent satellite passes.
               </p>
             </div>
             <div className="text-sm font-bold font-mono-tech text-amber-400 pt-2 border-t border-white/5">
-              {evidence?.increasingTrend?.value}
+              {evidence?.increasingTrend?.value || '+42% Velocity Shift'}
             </div>
           </div>
 
-          {/* Evidence 3: Forecast deterioration */}
+          {/* Bullet 3: Forecast indicates continued movement */}
           <div className="p-3.5 rounded-xl bg-slate-900/90 border border-white/10 flex flex-col justify-between gap-2">
             <div>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[10px] font-mono-tech text-slate-400 font-bold uppercase">Evidence 03</span>
                 <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 font-bold">
-                  {evidence?.forecastDeterioration?.status || 'CRITICAL'}
+                  CRITICAL
                 </span>
               </div>
               <h4 className="text-xs font-bold text-white font-mono-tech">
-                {evidence?.forecastDeterioration?.title || 'Forecast Deterioration'}
+                Forecast indicates continued movement
               </h4>
               <p className="text-[11px] text-slate-300 mt-1 leading-snug">
-                {evidence?.forecastDeterioration?.desc || 'Predictive model projects continued downward trend breaching thresholds.'}
+                LSTM neural network projects trajectory breaching critical safety limits in 30 days.
               </p>
             </div>
             <div className="text-sm font-bold font-mono-tech text-orange-400 pt-2 border-t border-white/5">
-              {evidence?.forecastDeterioration?.value}
+              {evidence?.forecastDeterioration?.value || '-18.7 mm @ 30 Days'}
             </div>
           </div>
         </div>
 
-        {/* Observed -> Forecast Graph */}
+        {/* Observed vs Forecast Graph */}
         <div className="p-4 rounded-xl bg-slate-900/90 border border-white/10 flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold font-mono-tech text-white uppercase tracking-wider flex items-center gap-2">
               <Activity className="w-4 h-4 text-cyan-400" />
-              OBSERVED → FORECAST TRAJECTORY
+              OBSERVED VS FORECAST DISPLACEMENT
             </span>
             <span className="text-[11px] font-mono-tech text-slate-400">
-              Confidence Level: 95%
+              Confidence Band: 95%
             </span>
           </div>
           <DeformationChart zone={zone} />
         </div>
 
-        {/* Scientific Explanation Box */}
-        <div className="p-3.5 rounded-xl bg-cyan-950/40 border border-cyan-500/30 flex items-start gap-3">
-          <Info className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
+        {/* Requirement 2: AI RECOMMENDATION Box */}
+        <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
           <div className="text-xs text-slate-200 leading-relaxed">
-            <strong className="text-cyan-300 block font-mono-tech mb-0.5">Decision-Support & Prioritization Context:</strong>
-            “Risk is elevated because the observed deformation trend is persistent and the model forecasts continued movement. 
-            Dharti Drishti functions strictly as an early-warning decision-support system to prioritize human field verification and authority action.”
+            <div className="text-amber-400 font-bold font-mono-tech text-xs uppercase mb-0.5">
+              AI RECOMMENDATION: Prioritize field inspection
+            </div>
+            <p className="text-slate-300 text-[11px] mt-0.5">
+              Risk is elevated because the observed deformation trend is persistent and the model forecasts continued movement. 
+              Dharti Drishti serves as an early-warning decision-support tool to prioritize field inspection resources.
+            </p>
           </div>
         </div>
 
-        {/* Modal Actions */}
+        {/* Actions */}
         <div className="flex items-center justify-between pt-2 border-t border-white/10">
           <button
             onClick={onClose}
@@ -152,7 +153,7 @@ export default function ExplainabilityModal({ isOpen, onClose, zone, onStartVeri
             }}
             className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs font-mono-tech uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_0_15px_rgba(245,158,11,0.3)] cursor-pointer"
           >
-            <span>Proceed to Field Verification</span>
+            <span>START FIELD VERIFICATION</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
